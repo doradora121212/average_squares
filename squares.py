@@ -51,12 +51,29 @@ def convert_numbers(list_of_strings):
 
 
 if __name__ == "__main__":
-    numbers_strings = ["1","2","4"]
-    weight_strings = ["1","1","1"]        
     
-    numbers = convert_numbers(numbers_strings)
-    weights = convert_numbers(weight_strings)
+    from argparse import ArgumentParser
+
+    parser = ArgumentParser(description="Compute the sum of squares with equal weights.")
     
+    # positional arguments → the numbers
+    parser.add_argument(
+        "numbers",
+        nargs="+",          # one or more numbers
+        help="A list of numbers whose squares will be averaged"
+    )
+    parser.add_argument("--weights", "-w",
+    nargs="+",
+    help="Optional list of weights (must match number of values)."
+)
+    args = parser.parse_args()
+
+    # convert the strings to floats using your existing helper
+    numbers = convert_numbers(args.numbers)
+
+    # constant weights: None
+    weights = None
+
     result = average_of_squares(numbers, weights)
-    
+
     print(result)
